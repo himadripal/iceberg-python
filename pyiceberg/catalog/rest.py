@@ -293,9 +293,10 @@ class RestCatalog(Catalog):
         # take scope from properties or use default CATALOG_SCOPE
         scope = self.properties.get("scope") or CATALOG_SCOPE
 
-        data = {GRANT_TYPE: CLIENT_CREDENTIALS, CLIENT_ID: client_id, CLIENT_SECRET: client_secret, SCOPE: scope}
-        # Uses application/x-www-form-urlencoded by default
-        response = session.post(url=self.auth_url, data=data)
+        data = {GRANT_TYPE: CLIENT_CREDENTIALS, CLIENT_ID: client_id, CLIENT_SECRET: client_secret, SCOPE: CATALOG_SCOPE}
+        response = session.post(
+            url=self.auth_url, data=data, headers={**session.headers, "Content-type": "application/x-www-form-urlencoded"}
+        )
         try:
             response.raise_for_status()
         except HTTPError as exc:
