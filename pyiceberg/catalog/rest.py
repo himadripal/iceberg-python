@@ -298,7 +298,8 @@ class RestCatalog(Catalog):
         # take scope from properties or use default CATALOG_SCOPE
         scope = self.properties.get("scope") or CATALOG_SCOPE
 
-        data = {GRANT_TYPE: CLIENT_CREDENTIALS, CLIENT_ID: client_id, CLIENT_SECRET: client_secret, SCOPE: CATALOG_SCOPE}
+        data = {GRANT_TYPE: CLIENT_CREDENTIALS, CLIENT_ID: client_id, CLIENT_SECRET: client_secret, SCOPE: scope}
+
         response = session.post(
             url=self.auth_url, data=data, headers={**session.headers, "Content-type": "application/x-www-form-urlencoded"}
         )
